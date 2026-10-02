@@ -5,3 +5,7 @@ build/
 .gradle/
 test-results/
 playwright-report/
+node_modules/
+playwright/.auth/
+test-results/
+playwright-report/
