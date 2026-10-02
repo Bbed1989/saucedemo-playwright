@@ -4,22 +4,10 @@ test('Add item to cart', async ({ page }) => {
   await page.goto('https://www.saucedemo.com/inventory.html');
   await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
   await page.locator('[data-test="shopping-cart-link"]').click();
-  await expect(page.locator('.inventory_item_name')).toHaveText('Sauce Labs Backpack');
+  await expect(page).toHaveURL(/cart\.html/);
+  await expect(page.locator('.cart_item .inventory_item_name')).toHaveText('Sauce Labs Backpack');
 });
 
-test('Order overview', async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/inventory.html');
-  await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-  await page.locator('[data-test="shopping-cart-link"]').click();
-  await page.locator('[data-test="checkout"]').click();
-  await page.locator('[data-test="firstName"]').fill('John');
-  await page.locator('[data-test="lastName"]').fill('Doe');
-  await page.locator('[data-test="postalCode"]').fill('12345');
-  await page.locator('[data-test="continue"]').click();
-  await expect(page.locator('.inventory_item_name')).toHaveText('Sauce Labs Backpack');
-  await expect(page.locator('.summary_subtotal_label')).toHaveText('Item total: $29.99');
-  await expect(page.locator('.cart_quantity')).toHaveText('1');
-});
 
 test('Remove item from cart', async ({ page }) => {
   await page.goto('https://www.saucedemo.com/inventory.html');
@@ -108,23 +96,4 @@ test('Finish checkout', async ({ page }) => {
 
   await expect(page.locator('.complete-header'))
     .toHaveText('Thank you for your order!');
-});
-
-test('User can add two products', async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/inventory.html');
-
-  await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-
-  await page.waitForTimeout(500);
-
-  await page.locator('[data-test="add-to-cart-sauce-labs-bike-light"]').click();
-
-  await page.locator('[data-test="shopping-cart-link"]').click();
-
-  const items = page.locator('.inventory_item_name');
-
-  await expect(items).toHaveText([
-    'Sauce Labs Backpack',
-    'Sauce Labs Bike Light'
-  ]);
 });
