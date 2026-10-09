@@ -1,11 +1,7 @@
-import { test, expect } from '@playwright/test';
-import { InventoryPage } from '../pages/InventoryPage';
-import { CartPage } from '../pages/CartPage';
-import { CheckoutPage } from '../pages/CheckoutPage';
+import { test, expect } from '../fixtures';
 
 
-test('Add item to cart', async ({ page }) => {
-  const inventoryPage = new InventoryPage(page);
+test('Add item to cart', async ({ inventoryPage, page }) => {
   await inventoryPage.open();
   await inventoryPage.addToCart('sauce-labs-backpack');
   await inventoryPage.goToCart();
@@ -14,9 +10,7 @@ test('Add item to cart', async ({ page }) => {
 });
 
 
-test('Remove item from cart', async ({ page }) => {
-  const inventoryPage = new InventoryPage(page);
-  const cartPage = new CartPage(page);
+test('Remove item from cart', async ({ inventoryPage, cartPage, page }) => {
   await inventoryPage.open();
   await inventoryPage.addToCart('sauce-labs-backpack');
   await inventoryPage.goToCart();
@@ -25,10 +19,7 @@ test('Remove item from cart', async ({ page }) => {
 });
 
 
-test('Checkout', async ({ page }) => {
-  const inventoryPage = new InventoryPage(page);
-  const cartPage = new CartPage(page);
-  const checkoutPage = new CheckoutPage(page);
+test('Checkout', async ({ inventoryPage, cartPage, checkoutPage, page }) => {
   await inventoryPage.open();
   await inventoryPage.addToCart('sauce-labs-backpack');
   await inventoryPage.goToCart();
@@ -49,10 +40,7 @@ test('Checkout', async ({ page }) => {
     .toHaveText('1');
 });
 
-test('Checkout for two items', async ({ page }) => {
-  const inventoryPage = new InventoryPage(page);
-  const cartPage = new CartPage(page);
-  const checkoutPage = new CheckoutPage(page);
+test('Checkout for two items', async ({ inventoryPage, cartPage, checkoutPage, page }) => {
   await inventoryPage.open();
 
   await inventoryPage.addToCart('sauce-labs-backpack');
@@ -80,10 +68,7 @@ test('Checkout for two items', async ({ page }) => {
     .toHaveText('1');
 });
 
-test('Finish checkout', async ({ page }) => {
-  const inventoryPage = new InventoryPage(page);
-  const cartPage = new CartPage(page);
-  const checkoutPage = new CheckoutPage(page);
+test('Finish checkout', async ({ inventoryPage, cartPage, checkoutPage, page }) => {
   await inventoryPage.open();
 
   await inventoryPage.addToCart('sauce-labs-backpack');
